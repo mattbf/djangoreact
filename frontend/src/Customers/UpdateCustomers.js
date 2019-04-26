@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import  CustomersAPI  from  './CustomersAPI';
 
-const  customersAPI  =  new  CustomersAPI();
+//const  customersAPI  =  new  CustomersAPI();
 
 function UpdateCustomers({match}) {
     const [values, setValues] = useState({
@@ -16,7 +16,7 @@ function UpdateCustomers({match}) {
     useEffect(() => {
       if(match.params && match.params.pk)
       {
-            customersAPI.getCustomer(match.params.pk).then((c)=> {
+            CustomersAPI.getCustomer(match.params.pk).then((c)=> {
               setValues({
                 firstName: c.first_name,
                 lastName: c.last_name,
@@ -33,26 +33,9 @@ function UpdateCustomers({match}) {
       setValues({ ...values, [name]: event.target.value });
     };
 
-    // handleCreate(){
-    // customersAPI.createCustomer(
-    //     {
-    //     "first_name":  this.refs.firstName.value,
-    //     "last_name":  this.refs.lastName.value,
-    //     "email":  this.refs.email.value,
-    //     "phone":  this.refs.phone.value,
-    //     "address":  this.refs.address.value,
-    //     "description":  this.refs.description.value
-    //     }).then((result)=>{
-    //             alert("Customer created!");
-    //     }).catch((error)=>{
-    //             alert('There was an error! Please re-check your form.' + error);
-    //
-    //     });
-    // }
-
     function handleCreate() {
       console.log("handle create called")
-      customersAPI.createCustomer({
+      CustomersAPI.createCustomer({
         "first_name":  values.firstName,
         "last_name":  values.lastName,
         "email":  values.email,
@@ -67,7 +50,7 @@ function UpdateCustomers({match}) {
     }
 
     function handleUpdate(pk){
-    customersAPI.updateCustomer(
+    CustomersAPI.updateCustomer(
     {
     "pk":  pk,
     "first_name":  values.firstName,

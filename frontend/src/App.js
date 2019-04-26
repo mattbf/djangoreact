@@ -2,7 +2,6 @@ import  React, { Component } from  'react';
 import { BrowserRouter } from  'react-router-dom'
 import { Route, Link } from  'react-router-dom'
 import  CustomersList  from  './Customers/CustomerList'
-import  CustomerCreateUpdate  from  './Customers/CustomerCreateUpdate'
 import UpdateCustomers from './Customers/UpdateCustomers.js';
 import  './App.css';
 

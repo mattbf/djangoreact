@@ -1,34 +1,33 @@
 import axios from 'axios';
 const API_URL = 'http://localhost:8000';
 
-export default class CustomersAPI{
+const CustomersAPI = {
 
-    constructor(){}
-
-
-    getCustomers() {
+    getCustomers: function() {
         const url = `${API_URL}/api/customers/`;
         return axios.get(url).then(response => response.data);
-    }
-    getCustomersByURL(link){
+    },
+    getCustomersByURL: function(link){
         const url = `${API_URL}${link}`;
         return axios.get(url).then(response => response.data);
-    }
-    getCustomer(pk) {
+    },
+    getCustomer: function(pk) {
         const url = `${API_URL}/api/customers/${pk}`;
         return axios.get(url).then(response => response.data);
-    }
-    deleteCustomer(customer){
+    },
+    deleteCustomer: function(customer){
         const url = `${API_URL}/api/customers/${customer.pk}`;
         return axios.delete(url);
-    }
-    createCustomer(customer){
+    },
+    createCustomer: function(customer){
         const url = `${API_URL}/api/customers/`;
         return axios.post(url,customer);
-    }
-    updateCustomer(customer){
+    },
+    updateCustomer: function(customer){
         console.log(customer)
         const url = `${API_URL}/api/customers/${customer.pk}`;
         return axios.put(url,customer);
-    }
+    },
 }
+
+export default CustomersAPI

@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import  CustomersAPI  from  './CustomersAPI';
-const  customersAPI  =  new  CustomersAPI();
+//const  customersAPI = CustomersAPI();
 
 
 function CustomersList() {
@@ -9,14 +9,15 @@ function CustomersList() {
     const [urlLink, setUrlLink] = useState('')
 
     useEffect(() => {
-      customersAPI.getCustomers().then(function (result) {
+
+      CustomersAPI.getCustomers().then(function (result) {
           setCustomers(result.data)
           setUrlLink(result.nextlink)
       });
     }, [])
 
     function handleDelete(e,pk) {
-        customersAPI.deleteCustomer({pk :  pk}).then(()=>{
+        CustomersAPI.deleteCustomer({pk :  pk}).then(()=>{
             var  newArr = customers.filter(function(obj) {
                 return  obj.pk  !==  pk;
             });
@@ -25,7 +26,7 @@ function CustomersList() {
     }
 
   function nextPage() {
-    customersAPI.getCustomersByURL(urlLink).then((result) => {
+    CustomersAPI.getCustomersByURL(urlLink).then((result) => {
         setCustomers(result.data)
         setUrlLink(result.nextlink)
     });
