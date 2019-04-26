@@ -2,7 +2,7 @@ import React from 'react';
 
 import  CustomersAPI  from  './CustomersAPI';
 
-const  customersService  =  new  CustomersService();
+const  customersAPI  =  new  CustomersAPI();
 
 class  CustomersList  extends  React.Component {
 
@@ -35,7 +35,7 @@ class  CustomersList  extends  React.Component {
 
     nextPage(){
     var  self  =  this;
-    customersService.getCustomersByURL(this.state.nextPageURL).then((result) => {
+    customersAPI.getCustomersByURL(this.state.nextPageURL).then((result) => {
         self.setState({ customers:  result.data, nextPageURL:  result.nextlink})
     });
   }
