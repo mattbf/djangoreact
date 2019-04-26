@@ -3,6 +3,7 @@ import { BrowserRouter } from  'react-router-dom'
 import { Route, Link } from  'react-router-dom'
 import  CustomersList  from  './Customers/CustomerList'
 import  CustomerCreateUpdate  from  './Customers/CustomerCreateUpdate'
+import UpdateCustomers from './Customers/UpdateCustomers.js';
 import  './App.css';
 
 const  BaseLayout  = () => (
@@ -21,8 +22,8 @@ const  BaseLayout  = () => (
     </nav>
     <div  className="content">
         <Route  path="/"  exact  component={CustomersList}  />
-        <Route  path="/customer/:pk"  component={CustomerCreateUpdate}  />
-        <Route  path="/customer/"  exact  component={CustomerCreateUpdate}  />
+        <Route  path="/customer/:pk"  component={UpdateCustomers}  />
+        <Route  path="/customer/"  exact  component={UpdateCustomers}  />
     </div>
 </div>
 )

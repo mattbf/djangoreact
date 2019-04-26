@@ -4,7 +4,7 @@ from rest_framework import status
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Customer
-from .serializers import *
+from .serializers import CustomerSerializer
 
 
 @api_view(['GET', 'POST'])
