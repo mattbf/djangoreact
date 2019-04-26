@@ -5,7 +5,7 @@ const  customersAPI  =  new  CustomersAPI();
 
 function UpdateCustomers({match}) {
     const [values, setValues] = useState({
-      firstName: "Test Name",
+      firstName: "",
       lastName: "",
       email: "",
       phone: "",
@@ -16,92 +16,86 @@ function UpdateCustomers({match}) {
     useEffect(() => {
       if(match.params && match.params.pk)
       {
-        console.log("params true")
-      }
-    })
+            customersAPI.getCustomer(match.params.pk).then((c)=> {
+              setValues({
+                firstName: c.first_name,
+                lastName: c.last_name,
+                email: c.email,
+                phone: c.phone,
+                address: c.address,
+                description: c.description,
+              })
+            })
+        }
+    }, [])
 
     const handleChange = name => event => {
       setValues({ ...values, [name]: event.target.value });
     };
 
+    // handleCreate(){
+    // customersAPI.createCustomer(
+    //     {
+    //     "first_name":  this.refs.firstName.value,
+    //     "last_name":  this.refs.lastName.value,
+    //     "email":  this.refs.email.value,
+    //     "phone":  this.refs.phone.value,
+    //     "address":  this.refs.address.value,
+    //     "description":  this.refs.description.value
+    //     }).then((result)=>{
+    //             alert("Customer created!");
+    //     }).catch((error)=>{
+    //             alert('There was an error! Please re-check your form.' + error);
+    //
+    //     });
+    // }
 
+    function handleCreate() {
+      console.log("handle create called")
+      customersAPI.createCustomer({
+        "first_name":  values.firstName,
+        "last_name":  values.lastName,
+        "email":  values.email,
+        "phone":  values.phone,
+        "address":  values.address,
+        "description":  values.description,
+      }).then((result) => {
+          alert("Customer created!!")
+      }).catch((error)=>{
+          alert('There was an error! Please re-check your form.' + error);
+      });
+    }
 
-  //   componentDidMount(){
-  //   const { match: { params } } =  this.props;
-  //   if(params  &&  params.pk)
-  //   {
-  //       customersAPI.getCustomer(params.pk).then((c)=>{
-  //           this.refs.firstName.value  =  c.first_name;
-  //           this.refs.lastName.value  =  c.last_name;
-  //           this.refs.email.value  =  c.email;
-  //           this.refs.phone.value  =  c.phone;
-  //           this.refs.address.value  =  c.address;
-  //           this.refs.description.value  =  c.description;
-  //       })
-  //   }
-  // }
+    function handleUpdate(pk){
+    customersAPI.updateCustomer(
+    {
+    "pk":  pk,
+    "first_name":  values.firstName,
+    "last_name":  values.lastName,
+    "email":  values.email,
+    "phone":  values.phone,
+    "address":  values.address,
+    "description":  values.description
+    }
+    ).then((result)=>{
+        alert("Customer updated!");
+    }).catch(()=>{
+        alert('There was an error! Please re-check your form.');
+    });
+  }
 
-  //   handleCreate(){
-  //   customersAPI.createCustomer(
-  //       {
-  //       "first_name":  this.refs.firstName.value,
-  //       "last_name":  this.refs.lastName.value,
-  //       "email":  this.refs.email.value,
-  //       "phone":  this.refs.phone.value,
-  //       "address":  this.refs.address.value,
-  //       "description":  this.refs.description.value
-  //       }).then((result)=>{
-  //               alert("Customer created!");
-  //       }).catch((error)=>{
-  //               alert('There was an error! Please re-check your form.' + error);
-  //
-  //       });
-  //   }
-  //
-  //   handleUpdate(pk){
-  //   customersAPI.updateCustomer(
-  //   {
-  //   "pk":  pk,
-  //   "first_name":  this.refs.firstName.value,
-  //   "last_name":  this.refs.lastName.value,
-  //   "email":  this.refs.email.value,
-  //   "phone":  this.refs.phone.value,
-  //   "address":  this.refs.address.value,
-  //   "description":  this.refs.description.value
-  //   }
-  //   ).then((result)=>{
-  //
-  //       alert("Customer updated!");
-  //   }).catch(()=>{
-  //       alert('There was an error! Please re-check your form.');
-  //   });
-  // }
-  //
-  //   handleSubmit(event) {
-  //   const { match: { params } } =  this.props;
-  //   if(params  &&  params.pk){
-  //       this.handleUpdate(params.pk);
-  //   }
-  //   else
-  //   {
-  //       this.handleCreate();
-  //   }
-  //   event.preventDefault();
-  // }
-  //
-  // handleSubmit() {
-  //   const { match: { params } } =  props;
-  //   if(params  &&  params.pk){
-  //     handleUpdate(params.pk);
-  //   }
-  //   else
-  //   {
-  //     handleCreate();
-  //   }
-  //   event.preventDefault();
-  // }
+  function handleSubmit(event) {
+    if(match.params  &&  match.params.pk){
+      handleUpdate(match.params.pk);
+    }
+    else
+    {
+      handleCreate();
+    }
+    event.preventDefault();
+  }
         return (
-          <form>
+          <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label>
               First Name:</label>

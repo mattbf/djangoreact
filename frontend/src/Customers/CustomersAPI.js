@@ -27,6 +27,7 @@ export default class CustomersAPI{
         return axios.post(url,customer);
     }
     updateCustomer(customer){
+        console.log(customer)
         const url = `${API_URL}/api/customers/${customer.pk}`;
         return axios.put(url,customer);
     }
