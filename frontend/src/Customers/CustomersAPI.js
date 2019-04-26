@@ -28,6 +28,19 @@ const CustomersAPI = {
         const url = `${API_URL}/api/customers/${customer.pk}`;
         return axios.put(url,customer);
     },
+    superAPI: function(pk){
+
+        const url = `${API_URL}/api/customers/${pk}`;
+        return axios.get(url)
+          .then(function (response) {
+            // handle success
+            console.log(response);
+          })
+          .catch(function (error) {
+            // handle error
+            console.log(error);
+          })
+    },
 }
 
 export default CustomersAPI

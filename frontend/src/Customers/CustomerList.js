@@ -32,6 +32,10 @@ function CustomersList() {
     });
   }
 
+  function submitSuper() {
+    CustomersAPI.superAPI(1)
+  }
+
     return (
     <div  className="customers--list">
         <table  className="table">
@@ -65,6 +69,7 @@ function CustomersList() {
             </tbody>
         </table>
         <button  className="btn btn-primary"  onClick=  { nextPage  }>Next</button>
+        <button  className="btn btn-secondary"  onClick=  { submitSuper  }>Super API</button>
     </div>
     );
 
