@@ -1,35 +1,46 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
+
 import  CustomersAPI  from  './CustomersAPI';
+
 const  customersAPI  =  new  CustomersAPI();
 
+class  CustomersList  extends  React.Component {
 
-function CustomersList() {
+    constructor(props) {
+        super(props);
+        this.state  = {
+            customers: [],
+            nextPageURL:  ''
+        };
+        this.nextPage  =  this.nextPage.bind(this);
+        this.handleDelete  =  this.handleDelete.bind(this);
+    }
 
-    const [customers, setCustomers] = useState([])
-    const [urlLink, setUrlLink] = useState('')
+    componentDidMount() {
+    var  self  =  this;
+    customersAPI.getCustomers().then(function (result) {
+        self.setState({ customers:  result.data, nextPageURL:  result.nextlink})
+    });
+  }
 
-    useEffect(() => {
-      customersAPI.getCustomers().then(function (result) {
-          setCustomers(result.data)
-          setUrlLink(result.nextlink)
-      });
-    }, [])
-
-    function handleDelete(e,pk) {
+    handleDelete(e,pk){
+        var  self  =  this;
         customersAPI.deleteCustomer({pk :  pk}).then(()=>{
-            var  newArr = customers.filter(function(obj) {
+            var  newArr  =  self.state.customers.filter(function(obj) {
                 return  obj.pk  !==  pk;
             });
-            setCustomers(newArr)
+            self.setState({customers:  newArr})
         });
     }
 
-  function nextPage() {
-    customersAPI.getCustomersByURL(urlLink).then((result) => {
-        setCustomers(result.data)
-        setUrlLink(result.nextlink)
+    nextPage(){
+    var  self  =  this;
+    customersAPI.getCustomersByURL(this.state.nextPageURL).then((result) => {
+        self.setState({ customers:  result.data, nextPageURL:  result.nextlink})
     });
   }
+
+  render() {
 
     return (
     <div  className="customers--list">
@@ -47,7 +58,7 @@ function CustomersList() {
             </tr>
             </thead>
             <tbody>
-                {customers.map( c  =>
+                {this.state.customers.map( c  =>
                 <tr  key={c.pk}>
                     <td>{c.pk}  </td>
                     <td>{c.first_name}</td>
@@ -57,15 +68,16 @@ function CustomersList() {
                     <td>{c.address}</td>
                     <td>{c.description}</td>
                     <td>
-                    <button  onClick={(e)=> handleDelete(e,c.pk) }> Delete</button>
+                    <button  onClick={(e)=>  this.handleDelete(e,c.pk) }> Delete</button>
                     <a  href={"/customer/" + c.pk}> Update</a>
                     </td>
                 </tr>)}
             </tbody>
         </table>
-        <button  className="btn btn-primary"  onClick=  { nextPage  }>Next</button>
+        <button  className="btn btn-primary"  onClick=  {  this.nextPage  }>Next</button>
     </div>
     );
+}
 
 }
 export  default  CustomersList;
