@@ -36,8 +36,9 @@ class  CustomerCreateUpdate  extends  React.Component {
         "description":  this.refs.description.value
         }).then((result)=>{
                 alert("Customer created!");
-        }).catch(()=>{
-                alert('There was an error! Please re-check your form.');
+        }).catch((error)=>{
+                alert('There was an error! Please re-check your form.' + error);
+
         });
     }
 
