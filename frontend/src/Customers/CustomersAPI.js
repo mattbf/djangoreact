@@ -18,8 +18,9 @@ const CustomersAPI = {
             id: item.pk,
             name: item.first_name,
             double: item.email * 2,
+            logicNum: Math.random() * 10,
           })
-          });
+        });
           return array
       })
     },
@@ -50,11 +51,11 @@ const CustomersAPI = {
         return axios.get(url)
           .then(function (response) {
             // handle success
-            console.log(response);
+            //console.log(response);
           })
           .catch(function (error) {
             // handle error
-            console.log(error);
+            //console.log(error);
           })
     },
 }

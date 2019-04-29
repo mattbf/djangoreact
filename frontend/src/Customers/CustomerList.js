@@ -8,6 +8,7 @@ function CustomersList() {
     const [customers, setCustomers] = useState([])
     const [customArray, setCustomArray] = useState([])
     const [urlLink, setUrlLink] = useState('')
+    const [update, setUpdate] = useState(false)
 
     useEffect(() => {
 
@@ -16,10 +17,15 @@ function CustomersList() {
           setUrlLink(result.nextlink)
           //console.log(result)
       });
+    }, [])
+
+    useEffect(() => {
+      console.log("get Array called")
       CustomersAPI.getCustomArray().then(function (result) {
         setCustomArray(result)
       })
-    }, [])
+      console.log(customArray)
+    }, [update])
 
     function handleDelete(e,pk) {
         CustomersAPI.deleteCustomer({pk :  pk}).then(()=>{
@@ -39,6 +45,7 @@ function CustomersList() {
 
   function submitSuper() {
     CustomersAPI.superAPI(1)
+    setUpdate(!update)
   }
 
     return (
@@ -78,7 +85,12 @@ function CustomersList() {
         <div>
           <ul>
           {customArray.map( item =>
-            <li key={item.id}> {item.name} </li>
+            <li
+              key={item.id}
+            >
+              {item.name}
+              {item.logicNum >= 5 ?  'greater than 5' : 'not'}
+            </li>
           )}
           </ul>
         </div>
