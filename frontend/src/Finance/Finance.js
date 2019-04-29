@@ -10,7 +10,7 @@ function Finance() {
   const [timeSeries, setTimeSeries] = useState([])
 
   useEffect(() => {
-    doGet({
+    getTimeSeries({
       method: "GET",
       url: 'https://www.alphavantage.co/query',
       params: {
@@ -18,6 +18,8 @@ function Finance() {
         symbol: 'MSFT',
         apikey: 'B62IP93O6OGM4LCA',
       }
+    }).then(function (response) {
+      setTimeSeries(response)
     })
   }, []) // change to search
 
@@ -31,7 +33,8 @@ function Finance() {
       <ul>
         {res.isError ? "error loading data" :
           res.isLoading ? "loading..." :
-          console.log(res)
+          console.log(timeSeries),
+          console.log("res:" + res.data)
 
         }
 
