@@ -6,6 +6,11 @@ const CustomersAPI = {
     getCustomers: function() {
         const url = `${API_URL}/api/customers/`;
         return axios.get(url).then(response => response.data);
+
+    },
+    getCustomArray: function() {
+        const url = `${API_URL}/api/customers/`;
+        return axios.get(url).then(response => response.data);
     },
     getCustomersByURL: function(link){
         const url = `${API_URL}${link}`;

@@ -6,6 +6,7 @@ import  CustomersAPI  from  './CustomersAPI';
 function CustomersList() {
 
     const [customers, setCustomers] = useState([])
+    const [customArray, setCustomArray] = useState([])
     const [urlLink, setUrlLink] = useState('')
 
     useEffect(() => {
@@ -13,7 +14,11 @@ function CustomersList() {
       CustomersAPI.getCustomers().then(function (result) {
           setCustomers(result.data)
           setUrlLink(result.nextlink)
+          console.log(result)
       });
+      CustomersAPI.getCustomArray().then(function (result) {
+        setCustomArray(result.data)
+      })
     }, [])
 
     function handleDelete(e,pk) {
@@ -70,6 +75,13 @@ function CustomersList() {
         </table>
         <button  className="btn btn-primary"  onClick=  { nextPage  }>Next</button>
         <button  className="btn btn-secondary"  onClick=  { submitSuper  }>Super API</button>
+        <div>
+          <ul>
+          {customArray.map( item =>
+            <li key={item.pk}> {item.first_name} </li>
+          )}
+          </ul>
+        </div>
     </div>
     );
 
