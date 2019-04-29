@@ -3,7 +3,6 @@ import { BrowserRouter } from  'react-router-dom'
 import { Route, Link } from  'react-router-dom'
 import  Customers  from  './Customers/Customers';
 import Finance from './Finance/Finance.js';
-import  './App.css';
 
 class  App  extends  Component {
 
