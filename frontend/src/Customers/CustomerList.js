@@ -14,10 +14,10 @@ function CustomersList() {
       CustomersAPI.getCustomers().then(function (result) {
           setCustomers(result.data)
           setUrlLink(result.nextlink)
-          console.log(result)
+          //console.log(result)
       });
       CustomersAPI.getCustomArray().then(function (result) {
-        setCustomArray(result.data)
+        setCustomArray(result)
       })
     }, [])
 
@@ -78,7 +78,7 @@ function CustomersList() {
         <div>
           <ul>
           {customArray.map( item =>
-            <li key={item.pk}> {item.first_name} </li>
+            <li key={item.id}> {item.name} </li>
           )}
           </ul>
         </div>

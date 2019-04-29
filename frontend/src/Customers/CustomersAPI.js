@@ -10,7 +10,18 @@ const CustomersAPI = {
     },
     getCustomArray: function() {
         const url = `${API_URL}/api/customers/`;
-        return axios.get(url).then(response => response.data);
+        const array = []
+        return axios.get(url).then(function (response) {
+          console.log(response.data)
+          response.data.data.map(item => {
+          array.push({
+            id: item.pk,
+            name: item.first_name,
+            double: item.email * 2,
+          })
+          });
+          return array
+      })
     },
     getCustomersByURL: function(link){
         const url = `${API_URL}${link}`;
@@ -49,3 +60,14 @@ const CustomersAPI = {
 }
 
 export default CustomersAPI
+
+/*
+response.data.map(item => {
+customArray.push({
+  id: item.pk,
+  name: item.first_name,
+  double: item.email * 2,
+})
+});
+
+*/
