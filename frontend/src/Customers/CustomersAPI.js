@@ -12,7 +12,7 @@ const CustomersAPI = {
         const url = `${API_URL}/api/customers/`;
         const array = []
         return axios.get(url).then(function (response) {
-          console.log(response.data)
+          //console.log(response.data)
           response.data.data.map(item => {
           array.push({
             id: item.pk,

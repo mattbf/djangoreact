@@ -9,6 +9,8 @@ function CustomersList() {
     const [customArray, setCustomArray] = useState([])
     const [urlLink, setUrlLink] = useState('')
     const [update, setUpdate] = useState(false)
+    const [person, setPerson] = useState([])
+    const [searchField, setSearchField] = useState("")
 
     useEffect(() => {
 
@@ -20,11 +22,12 @@ function CustomersList() {
     }, [])
 
     useEffect(() => {
-      console.log("get Array called")
+      //console.log("get Array called")
       CustomersAPI.getCustomArray().then(function (result) {
         setCustomArray(result)
       })
-      console.log(customArray)
+      CustomersAPI.getCustomer(1).then(result => setPerson(result))
+      console.log(person)
     }, [update])
 
     function handleDelete(e,pk) {
@@ -46,6 +49,15 @@ function CustomersList() {
   function submitSuper() {
     CustomersAPI.superAPI(1)
     setUpdate(!update)
+  }
+
+  function searchCustomer(pk) {
+    console.log(pk)
+    CustomersAPI.getCustomer(pk).then(result => setPerson(result))
+  }
+
+  function changeSearch(event) {
+    setSearchField(event.target.value)
   }
 
     return (
@@ -82,18 +94,27 @@ function CustomersList() {
         </table>
         <button  className="btn btn-primary"  onClick=  { nextPage  }>Next</button>
         <button  className="btn btn-secondary"  onClick=  { submitSuper  }>Super API</button>
-        <div>
-          <ul>
-          {customArray.map( item =>
-            <li
-              key={item.id}
-            >
-              {item.name}
-              {item.logicNum >= 5 ?  'greater than 5' : 'not'}
-            </li>
-          )}
-          </ul>
+
+        <div style={{display: 'flex',}}>
+          <div style={{width: '250px'}}>
+            <ul>
+            {customArray.map( item =>
+              <li
+                key={item.id}
+              >
+                {item.name}
+                {item.logicNum >= 5 ?  'greater than 5' : 'not'}
+              </li>
+            )}
+            </ul>
+          </div>
+          <div style={{marginLeft: '50px',}}>
+            <input type="text" value={searchField} onChange={changeSearch}/>
+            <button onClick={(e) => searchCustomer(searchField)}> Search </button>
+            {person.first_name}
+          </div>
         </div>
+
     </div>
     );
 
