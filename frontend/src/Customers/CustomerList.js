@@ -113,6 +113,7 @@ function CustomersList() {
             <button onClick={(e) => searchCustomer(searchField)}> Search </button>
             {person.first_name}
           </div>
+          Custom Variable: {}
         </div>
 
     </div>

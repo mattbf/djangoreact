@@ -1,3 +1,4 @@
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 const API_URL = 'http://localhost:8000';
 
@@ -46,16 +47,19 @@ const CustomersAPI = {
         return axios.put(url,customer);
     },
     superAPI: function(pk){
-
+        const isLoading = true
+        const isError = false
         const url = `${API_URL}/api/customers/${pk}`;
         return axios.get(url)
           .then(function (response) {
             // handle success
             //console.log(response);
+            return {isLoading, response}
           })
           .catch(function (error) {
             // handle error
             //console.log(error);
+            return {isLoading, error}
           })
     },
 }
